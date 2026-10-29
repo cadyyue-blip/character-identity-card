@@ -1,4 +1,4 @@
 interface:
-  display_name: "AI角色资产逆向与身份卡"
-  short_description: "从参考图和定制指令生成稳定的多视角角色身份卡资产"
-  default_prompt: "Use $ai-character-asset-reverse-prompt to analyze my references and create a consistent character identity card."
+  display_name: "角色身份卡生成器"
+  short_description: "从一张或多张参考图生成稳定的多视角角色身份卡"
+  default_prompt: "Use $character-identity-card to create a consistent multi-view character identity card from my references."

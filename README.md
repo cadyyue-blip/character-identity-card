@@ -1,15 +1,16 @@
-# AI Character Asset Reverse Prompt
+# Character Identity Card
 
-An Agent Skill for turning one or more character references plus art direction into a reusable identity specification, model-ready prompts, and production-oriented multi-view character identity cards.
+An Agent Skill for creating a production-ready multi-view character identity card from one or more reference images plus optional art direction.
 
-中文：这是一个用于 AI 图片与短视频角色资产生产的 Agent Skill。它会区分参考图中可观察到的特征、用户明确提出的要求和必要推定，并生成稳定的角色身份锁、多视角身份卡提示词及精简平台提示词。
+中文：这是一个用于 AI 图片与短视频角色资产生产的角色身份卡 Skill。输入一张或多张参考图以及可选的服装、年龄、身高或风格要求，即可生成稳定的多视角角色身份卡。身份描述和提示词用于支持身份卡生产，不是主要产品。
 
 ## What it does
 
 - Extracts visually supported face, hair, body, and wardrobe directions.
 - Separates **observed**, **requested**, and **inferred** information.
 - Produces a geometry-based identity lock instead of vague beauty adjectives.
-- Supports reverse-prompt-only, identity-card, and platform-adaptation deliverables.
+- Defaults to generating an identity card when the user provides references without naming a deliverable.
+- Also supports identity-specification-only and platform-adaptation deliverables.
 - Provides `headless-body` and `full-head` body-panel modes.
 - Validates identity consistency, garment continuity, anatomy, skin texture, and panel completeness.
 - Keeps the complete rear head and hairstyle visible in the back body panel while avoiding distant-face drift in front and side body panels.
@@ -25,7 +26,7 @@ An Agent Skill for turning one or more character references plus art direction i
 ## Repository structure
 
 ```text
-ai-character-asset-reverse-prompt/
+character-identity-card/
 ├── SKILL.md
 ├── agents/
 │   └── openai.yaml
@@ -39,8 +40,8 @@ ai-character-asset-reverse-prompt/
 ### Codex
 
 ```bash
-git clone https://github.com/cadyyue-blip/ai-character-asset-reverse-prompt.git \
-  ~/.codex/skills/ai-character-asset-reverse-prompt
+git clone https://github.com/cadyyue-blip/character-identity-card.git \
+  ~/.codex/skills/character-identity-card
 ```
 
 Restart the agent session if the new Skill is not discovered immediately.
@@ -54,7 +55,7 @@ Clone or copy this repository into the tool's Skill directory. The entry point i
 Invoke the Skill and provide at least one usable character reference plus the intended direction:
 
 ```text
-Use $ai-character-asset-reverse-prompt.
+Use $character-identity-card.
 Create an identity card from these references.
 Wardrobe: minimal basics.
 Presentation: photorealistic young adult.
@@ -65,14 +66,14 @@ Must keep: the rear hairstyle visible in the back body panel.
 The Skill can return:
 
 ```text
-Mode: reverse prompt | identity card | prompt adaptation
+Mode: identity card | identity specification | platform adaptation
 Body-panel mode: headless-body | full-head
 Observed identity anchors: ...
 Requested direction: ...
 Inferred or unresolved details: ...
 Identity lock: ...
-Long generation prompt: ...
-Compact platform prompt: ...
+Exact generation prompt: ...
+Compact platform prompt: ... (optional)
 Validation notes: ...
 ```
 
@@ -80,11 +81,11 @@ Image generation is performed by the image-generation capability available in th
 
 ## Using it with LibTV / LiblibAI
 
-This repository is a **character-design and prompt-construction Skill**. LibTV's official `libtv-skill` is a separate execution Skill that connects an agent to LibTV for image and video generation.
+This repository is a **character identity-card creation Skill**. LibTV's official `libtv-skill` is a separate execution Skill that connects an agent to LibTV for image and video generation.
 
 Recommended composition:
 
-1. Install this Skill to analyze references and produce the identity lock, long prompt, compact prompt, and validation rules.
+1. Install this Skill to create the character identity card, identity lock, generation prompt, and validation rules.
 2. Install the official [`libtv-labs/libtv-skills`](https://github.com/libtv-labs/libtv-skills) integration and configure its required LibTV access credentials according to its documentation.
 3. Ask the agent to use this Skill first, then pass the finalized generation prompt and permitted reference assets to `libtv-skill` for execution.
 4. Keep the generated identity card as the identity anchor for later LibTV image-to-video or multi-shot workflows.

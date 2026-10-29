@@ -1,11 +1,11 @@
 ---
-name: ai-character-asset-reverse-prompt
-description: Analyze one or more character reference images plus custom art direction, reverse-specify the visible identity, and optionally generate a production-ready multi-view character identity card for AI image or short-video workflows. Use for character sheets, identity locking, face-angle references, or headless distant-body assets; do not claim to recover an image's original hidden prompt.
+name: character-identity-card
+description: Create a production-ready multi-view character identity card from one or more reference images plus optional art direction. Use for character identity locking, face-angle references, body turnarounds, rear-hairstyle references, and consistent AI image or video production. Clearly separate observed traits from requested or inferred details.
 ---
 
-# AI Character Asset Reverse Prompt
+# Character Identity Card
 
-Turn user-supplied character references into a reusable identity specification, model-ready prompts, and—when requested—a generated character identity card.
+Turn one or more character reference images plus optional art direction into a reusable, production-ready multi-view identity card for consistent AI image and video generation. Identity specifications and model-ready prompts support the card-generation workflow; they are not the primary product.
 
 ## Required inputs
 
@@ -18,11 +18,11 @@ Before generating or editing, inspect every local image with the available image
 
 ## Choose the deliverable
 
-1. **Reverse prompt only** — identity specification plus long and compact prompts.
-2. **Identity card** — specification, prompts, and a generated multi-panel card.
-3. **Prompt adaptation** — rewrite the same identity for a named image/video platform without generating an image.
+1. **Identity card (default)** — a generated multi-panel card plus the observed/requested/inferred specification and validation notes.
+2. **Identity specification only** — a reusable identity lock without generating an image; include prompts only when requested or operationally useful.
+3. **Platform adaptation** — adapt the locked identity and card instructions for a named image/video platform.
 
-If the user asks for a card, use the image-generation capability. Read [references/card-spec.md](references/card-spec.md) before generation. Read [references/prompt-template.md](references/prompt-template.md) when drafting the generation prompt or compact platform prompt.
+If the user supplies references and direction without naming a deliverable, default to an identity card. For a card, use the image-generation capability and read [references/card-spec.md](references/card-spec.md) before generation. Read [references/prompt-template.md](references/prompt-template.md) when drafting the generation prompt or an optional platform prompt.
 
 ## Core workflow
 
@@ -34,7 +34,7 @@ If the user asks for a card, use the image-generation capability. Read [referenc
    - `full-head` when the user explicitly needs conventional full-body turnarounds and accepts the higher risk of face drift.
 5. Generate the card from the references, preserving identity and wardrobe. The reference image is evidence, not an edit target, unless the user explicitly requests an edit.
 6. Inspect the result for identity drift, panel completeness, limb errors, garment inconsistency, accidental face content in the headless front/side panels, and a missing, cropped, or face-revealing head in the back panel. Make at most two focused revisions unless the user asks to continue.
-7. Return the final image, the observed/requested/inferred identity specification, the exact generation prompt, and a compact prompt suitable for point-consuming tools.
+7. Return the final image and the observed/requested/inferred identity specification. Also return the exact generation prompt for reproducibility; add a compact platform prompt when requested or useful for a point-consuming tool.
 
 ## Non-negotiable invariants
 
@@ -51,14 +51,14 @@ If the user asks for a card, use the image-generation capability. Read [referenc
 Keep the analysis concise and production-oriented:
 
 ```text
-Mode: reverse prompt | identity card | prompt adaptation
+Mode: identity card | identity specification | platform adaptation
 Body-panel mode: headless-body | full-head
 Observed identity anchors: ...
 Requested direction: ...
 Inferred or unresolved details: ...
 Identity lock: ...
-Long generation prompt: ...
-Compact platform prompt: ...
+Exact generation prompt: ... (for identity-card output)
+Compact platform prompt: ... (optional)
 Validation notes: ...
 ```
 
